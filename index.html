@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bewirb dich jetzt: Ausbildung Entwickler/in Digitales Business EFZ bei IGP.">
+<title>Zukunft starten: EDB bei IGP</title>
+
+<style>
+  :root {
+    --igp-orange: #E94E1B;
+    --igp-orange-soft: rgba(233, 78, 27, 0.08); 
+    --igp-orange-glow: rgba(233, 78, 27, 0.4);
+    
+    --dark: #1A1A1A;
+    --text: #333;
+    
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(255, 255, 255, 1);
+    --bg-color: #fcfcfc;
+    --card-bg: #ffffff;
+    --card-border: #eeeeee;
+
+    --tooltip-bg: #1A1A1A;
+    --tooltip-text: #ffffff;
+  }
+
+  /* DARK MODE */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --glass-bg: rgba(30, 30, 30, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text: #f0f0f0;
+      --dark: #ffffff; 
+      --igp-orange-soft: rgba(233, 78, 27, 0.15);
+      --bg-color: #121212;
+      --card-bg: #1E1E1E;
+      --card-border: #333333;
+
+      --tooltip-bg: #ffffff;
+      --tooltip-text: #1A1A1A;
+    }
+    input, textarea { background: #333; color: white; border-color: #444; }
+    body { background-image: radial-gradient(#333 1px, transparent 1px) !important; }
+    
+    .tech-badge, .quote-card, .card {
+      background: var(--card-bg) !important;
+      border-color: var(--card-border) !important;
+      color: var(--text) !important;
+    }
+    .quote-author { color: var(--text); }
+  }
+
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background-color: var(--bg-color);
+    background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* HEADER & CUBE */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--glass-bg); backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--igp-orange); padding: 0.8rem 1.2rem;
+  }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo-text {
+    font-weight: 800; font-size: 1.3rem; color: var(--dark); display: flex; align-items: center; gap: 15px;
+  }
+
+  /* 3D CUBE */
+  .cube-scene { width: 20px; height: 20px; perspective: 60px; }
+  .cube {
+    width: 100%; height: 100%; position: relative; transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(-20deg); animation: spinCube 8s infinite linear;
+  }
+  .cube-face {
+    position: absolute; width: 20px; height: 20px;
+    border: 1px solid rgba(0,0,0,0.1); background: var(--igp-orange); opacity: 0.8;
+  }
+  .front  { transform: rotateY(  0deg) translateZ(10px); }
+  .back   { transform: rotateY(180deg) translateZ(10px); }
+  .right  { transform: rotateY( 90deg) translateZ(10px); }
+  .left   { transform: rotateY(-90deg) translateZ(10px); }
+  .top    { transform: rotateX( 90deg) translateZ(10px); }
+  .bottom { transform: rotateX(-90deg) translateZ(10px); }
+  @keyframes spinCube {
+    0% { transform: rotateX(-20deg) rotateY(0deg); }
+    100% { transform: rotateX(-20deg) rotateY(360deg); }
+  }
+  
+  /* NAV */
+  .nav-link {
+    text-decoration: none; color: var(--text); font-weight: 600; margin-left: 2rem; font-size: 0.95rem; transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--igp-orange); }
+  .cta-button {
+    background: var(--igp-orange); color: white; padding: 0.6rem 1.4rem;
+    border-radius: 50px; text-decoration: none; font-weight: bold;
+    box-shadow: 0 4px 15px var(--igp-orange-glow); transition: transform 0.2s; margin-left: 2rem;
+  }
+  .cta-button:hover { transform: translateY(-2px); }
+  @media(max-width: 900px) { .desktop-nav { display: none; } }
+
+  /* LAYOUT */
+  .section { max-width: 1000px; margin: 0 auto; padding: 4rem 1.5rem; scroll-margin-top: 80px; }
+  h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1rem; color: var(--dark); }
+  h2 { font-size: 2rem; color: var(--igp-orange); margin-bottom: 1.5rem; position: relative; display: inline-block; }
+  h2::after { content:''; position: absolute; left:0; bottom: -5px; width: 40px; height: 3px; background: var(--igp-orange); }
+
+  .card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem; transition: transform 0.3s;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(233, 78, 27, 0.1); }
+
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; }
+  @media(max-width:800px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .video-container {
+    border-radius: 20px; overflow: hidden; box-shadow: 20px 20px 0px var(--igp-orange-soft);
+    border: 1px solid white; background: black;
+  }
+  video { width: 100%; display: block; }
+
+  /* TECH STACK & TOOLTIPS */
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem; }
+  
+  .tech-badge {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    cursor: help; position: relative; transition: all 0.2s ease;
+  }
+  .tech-badge span { color: var(--igp-orange); font-weight: bold; }
+  .tech-badge:hover { border-color: var(--igp-orange); transform: translateY(-2px); z-index: 10; }
+
+  .tech-badge::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%) scale(0.8);
+    background: var(--tooltip-bg); color: var(--tooltip-text);
+    padding: 0.6rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: normal;
+    white-space: nowrap; opacity: 0; pointer-events: none; visibility: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.2s ease;
+  }
+  .tech-badge::before {
+    content:''; position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+    border: 6px solid transparent; border-top-color: var(--tooltip-bg);
+    opacity: 0; visibility: hidden; transition: all 0.2s ease;
+  }
+  .tech-badge:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); }
+  .tech-badge:hover::before { opacity: 1; visibility: visible; }
+
+  /* TEAM & AVATARE */
+  .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media(max-width:700px){ .testimonials-grid { grid-template-columns: 1fr; } }
+  
+  .quote-card {
+    background: var(--card-bg); padding: 1.5rem; border-radius: 12px;
+    border-left: 4px solid var(--igp-orange); border: 1px solid var(--card-border);
+    font-style: italic;
+  }
+  .quote-author {
+    margin-top: 1rem; font-style: normal; font-weight: bold; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 15px;
+  }
+  .avatar-img {
+    width: 50px; height: 50px; border-radius: 50%; object-fit: cover;
+    border: 2px solid var(--igp-orange); background-color: #eee;
+  }
+
+  /* TIMELINE */
+  .timeline { padding-left: 2rem; border-left: 3px solid var(--igp-orange); }
+  .timeline-item { margin-bottom: 2.5rem; position: relative; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -2.65rem; top: 0.3rem;
+    width: 1rem; height: 1rem; background: white;
+    border: 3px solid var(--igp-orange); border-radius: 50%; z-index: 2;
+  }
+  .year-badge {
+    background: var(--igp-orange-soft); color: var(--igp-orange); padding: 0.3rem 0.8rem;
+    border-radius: 6px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase;
+  }
+
+  /* FAQ & FORM */
+  details {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 12px; margin-bottom: 1rem; overflow: hidden;
+  }
+  summary {
+    padding: 1.2rem; cursor: pointer; font-weight: 600; list-style: none;
+    display: flex; justify-content: space-between; align-items: center; color: var(--dark);
+  }
+  summary::after { content: '+'; font-size: 1.5rem; color: var(--igp-orange); }
+  details[open] summary::after { content: '−'; }
+  .faq-content { padding: 0 1.2rem 1.2rem 1.2rem; opacity: 0.8; line-height: 1.6;}
+
+  input, textarea {
+    width: 100%; padding: 1rem; margin-bottom: 1rem;
+    border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; font-family: inherit;
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--igp-orange); }
+  
+  #sent-toggle { display: none; }
+  #sent-toggle:checked ~ form { display: none; }
+  #sent-toggle:checked ~ .success-msg { display: block; animation: popIn 0.5s ease-out; }
+  .success-msg { display: none; text-align: center; padding: 3rem; }
+  @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  .btn-submit {
+    display: block; width: 100%; background: var(--igp-orange); color: white;
+    text-align: center; padding: 1rem; border-radius: 10px; font-weight: bold;
+    cursor: pointer; border: none; font-size: 1rem;
+  }
+  .btn-submit:hover { filter: brightness(0.9); }
+  
+  .icon-box {
+    font-size: 2rem; margin: 0 auto 1rem auto;
+    background: var(--igp-orange-soft); width: 60px; height: 60px;
+    display: flex; align-items: center; justify-content: center; border-radius: 50%;
+  }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+  .stat-item { text-align: center; }
+  .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--igp-orange); display: block;}
+  .stat-label { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
+  
+  /* Audio Player Styling */
+  .podcast-box {
+    background: var(--card-bg); padding: 1.5rem; border-radius: 12px;
+    border-left: 4px solid var(--igp-orange); border: 1px solid var(--card-border);
+    margin-top: 1rem;
+  }
+  audio { width: 100%; margin-top:0.5rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-text">
+      <div class="cube-scene">
+        <div class="cube">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
+      </div>
+      IGP <span style="font-weight:300">CAREERS</span>
+    </div>
+    <nav class="desktop-nav">
+      <a href="#about" class="nav-link">Überblick</a>
+      <a href="#team" class="nav-link">Team</a>
+      <a href="#timeline" class="nav-link">Der Weg</a>
+      <a href="#faq" class="nav-link">Fragen?</a>
+      <a href="#contact" class="cta-button">Jetzt bewerben</a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" id="about">
+  <div class="hero-grid">
+    <div>
+      <span style="color:var(--igp-orange); font-weight:bold; letter-spacing:1px; text-transform:uppercase; font-size:0.9rem;">
+        Ausbildung bei IGP Powder Coatings
+      </span>
+      <h1 style="margin-top:0.5rem;">Entwickler/in digitales Business EFZ</h1>
+      <p style="font-size:1.15rem;">
+        Du magst Technik, aber redest auch gerne mit Menschen? 
+        Als EDB bist du die Schnittstelle. Du sorgst dafür, dass digitale Tools nicht nur funktionieren, sondern die Arbeit für alle leichter machen.
+      </p>
+      
+      <div style="margin-top: 1.5rem;">
+        <p style="font-size:0.9rem; font-weight:bold; opacity:0.6; margin-bottom:0.5rem;">
+          DEINE WERKZEUGE (Maus darüber bewegen):
+        </p>
+        <div class="tech-stack">
+          <div class="tech-badge" data-tooltip="Kollaboration & Kommunikation">
+            <span>#</span> Microsoft 365
+          </div>
+          <div class="tech-badge" data-tooltip="Steuerung der Geschäftsprozesse">
+            <span>#</span> SAP ERP
+          </div>
+          <div class="tech-badge" data-tooltip="Datenvisualisierung & Dashboards">
+            <span>#</span> Power BI
+          </div>
+          <div class="tech-badge" data-tooltip="Automatisierung & Skripte">
+            <span>#</span> Python
+          </div>
+          <div class="tech-badge" data-tooltip="Datenbank-Abfragen">
+            <span>#</span> SQL
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Kollegen</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4</span>
+          <span class="stat-label">Jahre</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Support</span>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="video-container">
+      <video controls playsinline>
+        <source src="Werde_Entwickler_in_digitales_Business.mp4" type="video/mp4">
+        Dein Browser unterstützt das Video nicht.
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="podcast">
+  <h2>🎧 Podcast: „Deine Zukunft als EDB“</h2>
+  <div class="podcast-box">
+    <strong>Podcast – EDB: Deine Zukunft</strong>
+    <audio controls>
+      <source src="Entwickler_digitales_Business_Übersetzer_zwischen_Welten.m4a" type="audio/mp4">
+      Dein Browser unterstützt das Audioformat nicht.
+    </audio>
+    <p style="font-size:0.8rem; margin-top:0.5rem; opacity:0.6;">(Podcast generiert mit NotebookLM)</p>
+  </div>
+</section>
+
+<section class="section">
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem;">
+      <div class="card" style="padding:1.5rem; margin:0; text-align:center;">
+        <div class="icon-box">🚀</div>
+        <strong>Digital</strong>
+        <p style="font-size:0.9rem; margin-top:0.5rem;">Du arbeitest mit modernster Software und Hardware.</p>
+      </div>
+      <div class="card" style="padding:1.5rem; margin:0; text-align:center;">
+        <div class="icon-box">🤝</div>
+        <strong>Sozial</strong>
+        <p style="font-size:0.9rem; margin-top:0.5rem;">Du bist Teil eines Teams und hast täglich Kontakt mit Kollegen.</p>
+      </div>
+      <div class="card" style="padding:1.5rem; margin:0; text-align:center;">
+        <div class="icon-box">📈</div>
+        <strong>Business</strong>
+        <p style="font-size:0.9rem; margin-top:0.5rem;">Du lernst, wie ein internationales Unternehmen funktioniert.</p>
+      </div>
+  </div>
+</section>
+
+<section class="section" id="team">
+  <h2>Das sagt das Team</h2>
+  <div class="testimonials-grid">
+    <div class="quote-card">
+      "Ich dachte, IT wäre nur Programmieren. Hier lerne ich aber, wie man Prozesse versteht und Lösungen findet, die den Leuten wirklich helfen."
+      <div class="quote-author">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="LS" class="avatar-img" onerror="this.style.display='none'">
+        <div>
+          Lena S.<br>
+          <span style="font-weight:normal; font-size:0.8rem; color:var(--igp-orange);">Lernende, 2. Jahr</span>
+        </div>
+      </div>
+    </div>
+    <div class="quote-card">
+      "Bei IGP wird man ernst genommen. Meine erste Datenanalyse wurde direkt im Meeting der Produktionsleitung vorgestellt. Das war cool!"
+      <div class="quote-author">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="MK" class="avatar-img" onerror="this.style.display='none'">
+        <div>
+          Marco K.<br>
+          <span style="font-weight:normal; font-size:0.8rem; color:var(--igp-orange);">Lernender, 4. Jahr</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="timeline">
+  <h2>Dein Weg zum Profi</h2>
+  <div class="card">
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="year-badge">1. Lehrjahr</span>
+        <h3 style="margin:0.5rem 0;">Grundlagen & Ankommen</h3>
+        <p style="margin:0;">Du lernst IGP kennen, verstehst unsere Datenstrukturen und Hardware-Basics.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year-badge">2. Lehrjahr</span>
+        <h3 style="margin:0.5rem 0;">Prozesse & Projekte</h3>
+        <p style="margin:0;">Erste eigene Teilprojekte. Du analysierst Abläufe in der Produktion.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year-badge">3. Lehrjahr</span>
+        <h3 style="margin:0.5rem 0;">Vertiefung & Verantwortung</h3>
+        <p style="margin:0;">Du begleitest die Einführung neuer Tools und schulst Mitarbeitende.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year-badge">4. Lehrjahr</span>
+        <h3 style="margin:0.5rem 0;">Abschluss & Zukunft</h3>
+        <p style="margin:0;">Deine grosse individuelle Produktivarbeit (IPA) steht an.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <h2>Häufige Fragen</h2>
+  <details>
+    <summary>Brauche ich Programmierkenntnisse?</summary>
+    <div class="faq-content">Nein, nicht zwingend für den Start. Wichtiger sind logisches Denken.</div>
+  </details>
+  <details>
+    <summary>Wie sieht ein typischer Arbeitstag aus?</summary>
+    <div class="faq-content">Sehr abwechslungsreich! Mal Computer, mal Meetings.</div>
+  </details>
+  <details>
+    <summary>Kann ich schnuppern kommen?</summary>
+    <div class="faq-content">Absolut! Melde dich unten.</div>
+  </details>
+</section>
+
+<section class="section" id="contact">
+  <div class="card">
+    <h2 style="text-align:center; margin-top:0;">Interesse geweckt?</h2>
+    <p style="text-align:center; margin-bottom:2rem;">Fülle das Formular aus – wir melden uns.</p>
+    <input type="checkbox" id="sent-toggle">
+    <form>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <input type="text" placeholder="Dein Name" required>
+        <input type="email" placeholder="Deine E-Mail" required>
+      </div>
+      <textarea rows="5" placeholder="Deine Nachricht..." required></textarea>
+      <label for="sent-toggle" class="btn-submit">Nachricht absenden</label>
+      <p style="font-size:0.8rem; text-align:center; margin-top:1rem; opacity:0.6;">(Demo-Modus)</p>
+    </form>
+    <div class="success-msg">
+      <div style="font-size:3rem; margin-bottom:1rem;">🎉</div>
+      <h3 style="color:var(--igp-orange);">Nachricht erhalten!</h3>
+      <p>Danke für dein Interesse.</p>
+      <label for="sent-toggle" style="text-decoration:underline; cursor:pointer;">Zurück</label>
+    </div>
+  </div>
+</section>
+
+<footer style="text-align:center; padding:2rem; opacity:0.6; font-size:0.9rem; border-top:1px solid #ddd;">
+  © 2025 IGP Powder Coatings • Designed with AI
+</footer>
+
+</body>
+</html>
