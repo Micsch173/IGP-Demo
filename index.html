@@ -2,8 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Bewirb dich jetzt: Ausbildung Entwickler/in Digitales Business EFZ bei IGP.">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> <meta name="description" content="Bewirb dich jetzt: Ausbildung Entwickler/in Digitales Business EFZ bei IGP.">
 <title>Zukunft starten: EDB bei IGP</title>
 
 <style>
@@ -61,6 +60,8 @@
     background-color: var(--bg-color);
     background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
     background-size: 20px 20px;
+    /* Verhindert Pull-to-Refresh auf Mobile beim Spielen */
+    overscroll-behavior-y: none; 
   }
 
   /* HEADER & CUBE */
@@ -233,13 +234,47 @@
   .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--igp-orange); display: block;}
   .stat-label { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
   
-  /* Audio Player Styling */
   .podcast-box {
     background: var(--card-bg); padding: 1.5rem; border-radius: 12px;
     border-left: 4px solid var(--igp-orange); border: 1px solid var(--card-border);
     margin-top: 1rem;
   }
   audio { width: 100%; margin-top:0.5rem; }
+
+  /* --- GAME STYLES --- */
+  .game-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    background: #222;
+    border-radius: 12px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 4px solid var(--igp-orange);
+    touch-action: none; /* WICHTIG: Verhindert Scrollen beim Spielen */
+  }
+  canvas { display: block; width: 100%; height: 100%; }
+  
+  #start-screen {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.85);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    color: white; z-index: 10;
+  }
+  .btn-game {
+    background: var(--igp-orange); color: white; border: none;
+    padding: 0.8rem 2rem; font-size: 1.2rem; font-weight: bold;
+    border-radius: 50px; cursor: pointer; margin-top: 1rem;
+  }
+  .btn-game:hover { transform: scale(1.05); }
+  .score-board {
+    position: absolute; top: 10px; left: 15px;
+    color: white; font-family: monospace; font-size: 1.2rem;
+    z-index: 5; pointer-events: none;
+    text-shadow: 1px 1px 0 #000;
+  }
 </style>
 </head>
 <body>
@@ -261,7 +296,7 @@
     </div>
     <nav class="desktop-nav">
       <a href="#about" class="nav-link">Überblick</a>
-      <a href="#team" class="nav-link">Team</a>
+      <a href="#game" class="nav-link" style="color:var(--igp-orange)">Game</a>
       <a href="#timeline" class="nav-link">Der Weg</a>
       <a href="#faq" class="nav-link">Fragen?</a>
       <a href="#contact" class="cta-button">Jetzt bewerben</a>
@@ -273,7 +308,7 @@
   <div class="hero-grid">
     <div>
       <span style="color:var(--igp-orange); font-weight:bold; letter-spacing:1px; text-transform:uppercase; font-size:0.9rem;">
-        Ausbildung bei IGP 
+        Ausbildung bei IGP Powder Coatings
       </span>
       <h1 style="margin-top:0.5rem;">Entwickler/in digitales Business EFZ</h1>
       <p style="font-size:1.15rem;">
@@ -286,39 +321,19 @@
           DEINE WERKZEUGE (Maus darüber bewegen):
         </p>
         <div class="tech-stack">
-          <div class="tech-badge" data-tooltip="Kollaboration & Kommunikation">
-            <span>#</span> Microsoft 365
-          </div>
-          <div class="tech-badge" data-tooltip="Steuerung der Geschäftsprozesse">
-            <span>#</span> SAP ERP
-          </div>
-          <div class="tech-badge" data-tooltip="Datenvisualisierung & Dashboards">
-            <span>#</span> Power BI
-          </div>
-          <div class="tech-badge" data-tooltip="Automatisierung & Skripte">
-            <span>#</span> Python
-          </div>
-          <div class="tech-badge" data-tooltip="Datenbank-Abfragen">
-            <span>#</span> SQL
-          </div>
+          <div class="tech-badge" data-tooltip="Kollaboration & Kommunikation"><span>#</span> Microsoft 365</div>
+          <div class="tech-badge" data-tooltip="Steuerung der Geschäftsprozesse"><span>#</span> SAP ERP</div>
+          <div class="tech-badge" data-tooltip="Datenvisualisierung & Dashboards"><span>#</span> Power BI</div>
+          <div class="tech-badge" data-tooltip="Automatisierung & Skripte"><span>#</span> Python</div>
+          <div class="tech-badge" data-tooltip="Datenbank-Abfragen"><span>#</span> SQL</div>
         </div>
       </div>
 
       <div class="stats-grid">
-        <div class="stat-item">
-          <span class="stat-number">500+</span>
-          <span class="stat-label">Kollegen</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">4</span>
-          <span class="stat-label">Jahre</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">100%</span>
-          <span class="stat-label">Support</span>
-        </div>
+        <div class="stat-item"><span class="stat-number">500+</span><span class="stat-label">Kollegen</span></div>
+        <div class="stat-item"><span class="stat-number">4</span><span class="stat-label">Jahre</span></div>
+        <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Support</span></div>
       </div>
-
     </div>
     
     <div class="video-container">
@@ -327,6 +342,27 @@
         Dein Browser unterstützt das Video nicht.
       </video>
     </div>
+  </div>
+</section>
+
+<section class="section" id="game">
+  <h2>🎮 Challenge: Data Defender</h2>
+  <p class="lead" style="max-width:600px; margin-bottom:1.5rem;">
+    Als EDB musst du sicherstellen, dass keine Daten verloren gehen. 
+    Steuere das untere "System", um das Datenpaket im Fluss zu halten!
+  </p>
+
+  <div class="game-container">
+    <div class="score-board">Score: <span id="score">0</span></div>
+    
+    <div id="start-screen">
+      <h3 style="font-size:1.5rem; margin-bottom:0.5rem; color:var(--igp-orange);">DATA PONG</h3>
+      <p>Halte den Ball im Spiel!</p>
+      <button class="btn-game" onclick="startGame()">Starten</button>
+      <p style="font-size:0.8rem; margin-top:1rem; opacity:0.7;">Steuerung: Maus oder Finger</p>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
   </div>
 </section>
 
@@ -369,20 +405,14 @@
       "Ich dachte, IT wäre nur Programmieren. Hier lerne ich aber, wie man Prozesse versteht und Lösungen findet, die den Leuten wirklich helfen."
       <div class="quote-author">
         <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="LS" class="avatar-img" onerror="this.style.display='none'">
-        <div>
-          Lena S.<br>
-          <span style="font-weight:normal; font-size:0.8rem; color:var(--igp-orange);">Lernende, 2. Jahr</span>
-        </div>
+        <div>Lena S.<br><span style="font-weight:normal; font-size:0.8rem; color:var(--igp-orange);">Lernende, 2. Jahr</span></div>
       </div>
     </div>
     <div class="quote-card">
       "Bei IGP wird man ernst genommen. Meine erste Datenanalyse wurde direkt im Meeting der Produktionsleitung vorgestellt. Das war cool!"
       <div class="quote-author">
         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="MK" class="avatar-img" onerror="this.style.display='none'">
-        <div>
-          Marco K.<br>
-          <span style="font-weight:normal; font-size:0.8rem; color:var(--igp-orange);">Lernender, 4. Jahr</span>
-        </div>
+        <div>Marco K.<br><span style="font-weight:normal; font-size:0.8rem; color:var(--igp-orange);">Lernender, 4. Jahr</span></div>
       </div>
     </div>
   </div>
@@ -456,10 +486,162 @@
 </section>
 
 <footer style="text-align:center; padding:2rem; opacity:0.6; font-size:0.9rem; border-top:1px solid #ddd;">
-  © 2025 IGP • Designed with AI • Prompt by MSC
+  © 2025 IGP Powder Coatings • Designed with AI
 </footer>
 
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const startScreen = document.getElementById('start-screen');
+  const scoreEl = document.getElementById('score');
+
+  // Game Variablen
+  let gameRunning = false;
+  let score = 0;
+  
+  // Responsive Canvas Größe
+  function resizeGame() {
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+  }
+  window.addEventListener('resize', resizeGame);
+  resizeGame(); // Init
+
+  // Farben (IGP Orange)
+  const colorPrimary = '#E94E1B';
+  const colorWhite = '#ffffff';
+
+  // Spieler (Schläger unten)
+  const paddleHeight = 15;
+  const paddleWidth = 80;
+  let paddleX = (canvas.width - paddleWidth) / 2;
+
+  // Ball
+  let ballRadius = 8;
+  let x = canvas.width / 2;
+  let y = canvas.height - 30;
+  let dx = 4;
+  let dy = -4;
+
+  // Steuerung
+  let rightPressed = false;
+  let leftPressed = false;
+
+  // Event Listener für Tastatur & Maus & Touch
+  document.addEventListener("keydown", keyDownHandler, false);
+  document.addEventListener("keyup", keyUpHandler, false);
+  document.addEventListener("mousemove", mouseMoveHandler, false);
+  
+  // Touch Support
+  canvas.addEventListener("touchmove", touchMoveHandler, {passive: false});
+
+  function keyDownHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") rightPressed = true;
+    else if(e.key == "Left" || e.key == "ArrowLeft") leftPressed = true;
+  }
+  function keyUpHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") rightPressed = false;
+    else if(e.key == "Left" || e.key == "ArrowLeft") leftPressed = false;
+  }
+  function mouseMoveHandler(e) {
+    const relativeX = e.clientX - canvas.getBoundingClientRect().left;
+    if(relativeX > 0 && relativeX < canvas.width) {
+      paddleX = relativeX - paddleWidth / 2;
+    }
+  }
+  function touchMoveHandler(e) {
+    e.preventDefault(); // Verhindert Scrollen
+    const touch = e.touches[0];
+    const relativeX = touch.clientX - canvas.getBoundingClientRect().left;
+    if(relativeX > 0 && relativeX < canvas.width) {
+      paddleX = relativeX - paddleWidth / 2;
+    }
+  }
+
+  function startGame() {
+    startScreen.style.display = 'none';
+    gameRunning = true;
+    score = 0;
+    scoreEl.innerText = score;
+    x = canvas.width/2;
+    y = canvas.height-30;
+    dx = 4;
+    dy = -4;
+    draw();
+  }
+
+  function drawBall() {
+    ctx.beginPath();
+    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    ctx.fillStyle = colorWhite;
+    ctx.fill();
+    ctx.closePath();
+    
+    // Kleiner Glow Effekt
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = colorPrimary;
+  }
+
+  function drawPaddle() {
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height - paddleHeight - 10, paddleWidth, paddleHeight);
+    ctx.fillStyle = colorPrimary;
+    ctx.fill();
+    ctx.closePath();
+    ctx.shadowBlur = 0;
+  }
+
+  function draw() {
+    if(!gameRunning) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBall();
+    drawPaddle();
+
+    // Wände Kollision
+    if(x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+      dx = -dx;
+    }
+    
+    // Decke Kollision
+    if(y + dy < ballRadius) {
+      dy = -dy;
+    } 
+    // Boden Kollision (oder Schläger)
+    else if(y + dy > canvas.height - ballRadius - paddleHeight - 10) {
+      // Prüfen ob Schläger getroffen
+      if(x > paddleX && x < paddleX + paddleWidth) {
+        dy = -dy;
+        // Ball wird schneller
+        dx = dx * 1.05;
+        dy = dy * 1.05;
+        score++;
+        scoreEl.innerText = score;
+      }
+      else if(y + dy > canvas.height - ballRadius) {
+        // Game Over
+        gameRunning = false;
+        startScreen.style.display = 'flex';
+        startScreen.querySelector('h3').innerText = "GAME OVER";
+        startScreen.querySelector('p').innerText = "Score: " + score;
+        return;
+      }
+    }
+
+    x += dx;
+    y += dy;
+
+    // Paddle Bewegung (Tastatur)
+    if(rightPressed && paddleX < canvas.width - paddleWidth) {
+      paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+      paddleX -= 7;
+    }
+
+    requestAnimationFrame(draw);
+  }
+</script>
+
 </body>
-
 </html>
-
